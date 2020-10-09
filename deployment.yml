@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: accountpool
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: accountpool
+  namespace: accountpool
+spec:
+  storageClassName: azure-file
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: accountpool
+      name: accountpool
+      namespace: accountpool
+    spec:
+      ports:
+        - name: "6777"
+          port: 6777
+          targetPort: 6777
+      selector:
+        io.kompose.service: accountpool
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: accountpool
+      name: accountpool
+      namespace: accountpool
+    spec:
+      replicas: 2
+      revisionHistoryLimit: 1
+      strategy: {}
+      selector:
+        matchLabels:
+          io.kompose.service: accountpool
+      template:
+        metadata:
+          annotations:
+            kompose.cmd: kompose convert -f docker-compose.yml -o deployment.yml
+            kompose.version: 1.20.0 ()
+          creationTimestamp: null
+          labels:
+            io.kompose.service: accountpool
+        spec:
+          containers:
+            - env:
+                - name: REDIS_CONNECTION_STRING
+                  valueFrom:
+                    secretKeyRef:
+                      name: redis
+                      key: connection_string
+                - name: REDIS_PORT
+                  value: '6379'
+              image: germey/accountpool:${TAG}
+              name: accountpool
+              resources:
+                limits:
+                  memory: "500Mi"
+                  cpu: "300m"
+                requests:
+                  memory: "500Mi"
+                  cpu: "300m"
+              ports:
+                - containerPort: 6777
+              volumeMounts:
+                - mountPath: "/app/accountpool/logs"
+                  name: accountpool
+          restartPolicy: Always
+          volumes:
+            - name: accountpool
+              persistentVolumeClaim:
+                claimName: pvc-accountpool
+    status: {}
+kind: List
+metadata: {}
