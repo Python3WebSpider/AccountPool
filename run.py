@@ -1,8 +1,15 @@
-from cookiespool.scheduler import Scheduler
+from accountpool.scheduler import Scheduler
+import argparse
 
-def main():
-    s = Scheduler()
-    s.run()
+parser = argparse.ArgumentParser(description='AccoutPool')
+parser.add_argument('website', type=str, help='website')
+parser.add_argument('--processor', type=str, help='processor to run')
+args = parser.parse_args()
+website = args.website
 
 if __name__ == '__main__':
-    main()
+    # if processor set, just run it
+    if args.processor:
+        getattr(Scheduler(), f'run_{args.processor}')(website)
+    else:
+        Scheduler().run(website)
