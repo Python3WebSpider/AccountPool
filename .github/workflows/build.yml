@@ -19,6 +19,6 @@ jobs:
       run: docker-compose build
     - name: Tag and Push Master Version
       run: |
-        docker tag germey/proxypool germey/proxypool:master
-        docker push germey/proxypool:master
+        docker tag germey/accountpool germey/accountpool:master
+        docker push germey/accountpool:master
       
