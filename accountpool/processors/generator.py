@@ -24,11 +24,18 @@ class BaseGenerator(object):
         """
         raise NotImplementedError
     
+    def init(self):
+        """
+        do init
+        """
+        pass
+    
     def run(self):
         """
         run main process
         :return:
         """
+        self.init()
         logger.debug('start to run generator')
         for username, password in self.account_operator.all().items():
             logger.debug(f'start to generate credential of {username}')
@@ -39,6 +46,14 @@ import requests
 
 
 class Antispider6Generator(BaseGenerator):
+    
+    def init(self):
+        """
+        do init
+        """
+        if self.account_operator.count() == 0:
+            self.account_operator.set('admin', 'admin')
+            self.account_operator.set('admin2', 'admin2')
     
     def generate(self, username, password):
         """

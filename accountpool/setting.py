@@ -67,7 +67,7 @@ TEST_URL_MAP = {
 
 # definition of api
 API_HOST = env.str('API_HOST', '0.0.0.0')
-API_PORT = env.int('API_PORT', 5555)
+API_PORT = env.int('API_PORT', 6777)
 API_THREADED = env.bool('API_THREADED', True)
 
 # flags of enable
