@@ -42,12 +42,12 @@ REDIS_CREDENTIAL_KEY = env.str('REDIS_CREDENTIAL_KEY', 'credential:%s')
 
 # integrated generator
 GENERATOR_MAP = {
-    'antispider6': 'Antispider6Generator'
+    'antispider7': 'Antispider7Generator'
 }
 
 # integrated tester
 TESTER_MAP = {
-    'antispider6': 'Antispider6Tester'
+    'antispider7': 'Antispider7Tester',
 }
 
 # definition of tester cycle, it will test every CYCLE_TESTER second
@@ -62,7 +62,7 @@ TEST_TIMEOUT = env.int('TEST_TIMEOUT', 10)
 TEST_BATCH = env.int('TEST_BATCH', 20)
 # test url
 TEST_URL_MAP = {
-    'antispider6': 'https://antispider6.scrape.center/'
+    'antispider7': 'https://antispider7.scrape.center/'
 }
 
 # definition of api

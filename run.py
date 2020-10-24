@@ -10,6 +10,7 @@ website = args.website
 if __name__ == '__main__':
     # if processor set, just run it
     if args.processor:
+        print(args.processor)
         getattr(Scheduler(), f'run_{args.processor}')(website)
     else:
         Scheduler().run(website)

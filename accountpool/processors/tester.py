@@ -36,9 +36,9 @@ class BaseTester(object):
             self.test(username, credential)
 
 
-class Antispider6Tester(BaseTester):
+class Antispider7Tester(BaseTester):
     """
-    tester for antispider6
+    tester for antispider7
     """
     
     def __init__(self, website=None):
@@ -52,7 +52,7 @@ class Antispider6Tester(BaseTester):
         try:
             test_url = TEST_URL_MAP[self.website]
             response = requests.get(test_url, headers={
-                'Cookie': credential
+                'authorization': f'jwt {credential}'
             }, timeout=5, allow_redirects=False)
             if response.status_code == 200:
                 logger.info('credential is valid')
