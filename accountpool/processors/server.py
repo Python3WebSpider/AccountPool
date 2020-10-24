@@ -23,7 +23,6 @@ def get_conn():
     :return:
     """
     for website in GENERATOR_MAP:
-        print(website)
         if not hasattr(g, website):
             setattr(g, f'{website}_{credential}', RedisClient(credential, website))
             setattr(g, f'{website}_{account}', RedisClient(account, website))

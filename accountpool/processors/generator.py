@@ -38,6 +38,8 @@ class BaseGenerator(object):
         self.init()
         logger.debug('start to run generator')
         for username, password in self.account_operator.all().items():
+            if self.credential_operator.get(username):
+                continue
             logger.debug(f'start to generate credential of {username}')
             self.generate(username, password)
 

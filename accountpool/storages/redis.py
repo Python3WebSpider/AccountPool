@@ -61,7 +61,7 @@ class RedisClient(object):
     def random(self):
         """
         get random cookies or password
-        :return: 随机Cookies
+        :return: random cookies or password
         """
         return random.choice(self.db.hvals(self.name()))
     
