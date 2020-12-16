@@ -1,7 +1,7 @@
 from accountpool.scheduler import Scheduler
 import argparse
 
-parser = argparse.ArgumentParser(description='AccoutPool')
+parser = argparse.ArgumentParser(description='AccountPool')
 parser.add_argument('website', type=str, help='website')
 parser.add_argument('--processor', type=str, help='processor to run')
 args = parser.parse_args()
