@@ -15,4 +15,5 @@ services:
     environment:
       REDIS_HOST: redis4accountpool
       REDIS_PORT: "6379"
+      API_PORT: "6777"
       WEBSITE: antispider7
