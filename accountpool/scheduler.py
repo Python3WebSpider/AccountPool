@@ -60,7 +60,7 @@ class Scheduler(object):
     def run(self, website):
         global tester_process, generator_process, server_process
         try:
-            logger.info('starting account pool...')
+            logger.info(f'starting account pool for website {website}...')
             if ENABLE_TESTER:
                 tester_process = multiprocessing.Process(target=self.run_tester, args=(website,))
                 logger.info(f'starting tester, pid {tester_process.pid}...')

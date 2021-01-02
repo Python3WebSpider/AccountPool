@@ -1,6 +1,12 @@
 from accountpool.storages.redis import RedisClient
+import argparse
 
-conn = RedisClient('account', 'antispider7')
+parser = argparse.ArgumentParser(description='AccountPool')
+parser.add_argument('website', type=str, help='website')
+args = parser.parse_args()
+website = args.website
+
+conn = RedisClient('account', args.website)
 start = 1
 end = 100
 for i in range(start, end + 1):

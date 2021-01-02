@@ -1,19 +1,18 @@
 version: '3'
 services:
-  redis:
+  redis4accountpool:
     image: redis:alpine
     container_name: redis4accountpool
     command: redis-server
     ports:
-      - "6379:6379"
-    restart: always
+      - "6333:6379"
   accountpool:
     build: .
     image: 'germey/accountpool'
     container_name: accountpool
     ports:
       - "6777:6777"
-    restart: always
     environment:
-      REDIS_HOST: redis
+      REDIS_HOST: redis4accountpool
+      REDIS_PORT: "6379"
       WEBSITE: antispider7

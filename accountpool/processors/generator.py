@@ -14,7 +14,7 @@ class BaseGenerator(object):
             raise InitException
         self.account_operator = RedisClient(type='account', website=self.website)
         self.credential_operator = RedisClient(type='credential', website=self.website)
-
+    
     def generate(self, username, password):
         """
         generate method
@@ -23,13 +23,13 @@ class BaseGenerator(object):
         :return:
         """
         raise NotImplementedError
-
+    
     def init(self):
         """
         do init
         """
         pass
-
+    
     def run(self):
         """
         run main process
@@ -47,8 +47,40 @@ class BaseGenerator(object):
 import requests
 
 
-class Antispider7Generator(BaseGenerator):
+class Antispider6Generator(BaseGenerator):
+    
+    def init(self):
+        """
+        do init
+        """
+        if self.account_operator.count() == 0:
+            self.account_operator.set('admin', 'admin')
+            self.account_operator.set('admin2', 'admin2')
+    
+    def generate(self, username, password):
+        """
+        generate main process
+        """
+        if self.credential_operator.get(username):
+            logger.debug(f'credential of {username} exists, skip')
+            return
+        login_url = 'https://antispider6.scrape.center/login'
+        s = requests.Session()
+        s.post(login_url, data={
+            'username': username,
+            'password': password
+        })
+        result = []
+        for cookie in s.cookies:
+            print(cookie.name, cookie.value)
+            result.append(f'{cookie.name}={cookie.value}')
+        result = ';'.join(result)
+        logger.debug(f'get credential {result}')
+        self.credential_operator.set(username, result)
 
+
+class Antispider7Generator(BaseGenerator):
+    
     def generate(self, username, password):
         """
         generate main process
@@ -63,6 +95,7 @@ class Antispider7Generator(BaseGenerator):
             'password': password
         })
         if r.status_code != 200:
+            logger.error(f'error occurred while generating credential of {username}, error code {r.status_code}')
             return
         token = r.json().get('token')
         logger.debug(f'get credential {token}')
