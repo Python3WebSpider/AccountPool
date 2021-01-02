@@ -56,7 +56,18 @@ accountpool    | 2020-10-09 18:20:16,280 INFO success: tester entered RUNNING st
 
 可以看到 Redis、Generator、Server、Tester 都已经启动成功。
 
-这时候访问 [http://localhost:6777/antispider6/random](http://localhost:6777/antispider6/random) 即可获取一个 [antispider6](https://antispider6.scrape.center) 的随机可用 Cookies。
+另外还需要导入一些账号信息到 Redis 数据库里面，由于已经用 Docker 启动了 Redis 数据库，运行在 6333 端口上。
+
+这时候可以执行脚本：
+
+```
+export REDIS_PORT=6333
+python3 importer.py antispider7
+```
+
+运行完成之后如果没有报错就说明账号导入成功了，可以自行连上 Redis 看下。
+
+过一会访问 [http://localhost:6777/antispider7/random](http://localhost:6777/antispider7/random) 即可获取一个 [antispider7](https://antispider7.scrape.center) 的随机可用 Cookies。
 
 ## 常规方式运行
 
