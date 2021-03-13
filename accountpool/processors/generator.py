@@ -80,7 +80,16 @@ class Antispider6Generator(BaseGenerator):
 
 
 class Antispider7Generator(BaseGenerator):
-    
+
+    MAX_COUNT = 100
+
+    def init(self):
+        """
+        do init
+        """
+        for i in range(1, self.MAX_COUNT + 1):
+            self.account_operator.set(f'admin{i}', f'admin{i}')
+
     def generate(self, username, password):
         """
         generate main process
