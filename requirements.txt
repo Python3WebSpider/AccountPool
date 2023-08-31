@@ -1,7 +1,8 @@
 requests==2.13.0
 selenium==3.4.0
 redis==2.10.5
-Flask==0.12.1
+Flask==1.1.4
 environs==7.2.0
 loguru==0.3.2
 supervisor==4.1.0
+MarkupSafe==2.0.1
