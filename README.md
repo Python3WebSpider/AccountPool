@@ -6,9 +6,9 @@
 
 简易高效的账号池，提供如下功能：
 
-* 定时模拟登录账号，将 Cookies 或 JWT 等信息存储到 Redis 数据库。
-* 定时测试，剔除不可用 Cookies 或 JWT。
-* 提供 API，随机取用测试通过的可用 Cookies 或 JWT。
+- 定时模拟登录账号，将 Cookies 或 JWT 等信息存储到 Redis 数据库。
+- 定时测试，剔除不可用 Cookies 或 JWT。
+- 提供 API，随机取用测试通过的可用 Cookies 或 JWT。
 
 ## 使用要求
 
@@ -18,15 +18,15 @@
 
 如果使用 Docker，则需要安装如下环境：
 
-* Docker
-* Docker-Compose
+- Docker
+- Docker-Compose
 
 ### 常规方式
 
 常规方式要求有 Python 环境、Redis 环境，具体要求如下：
 
-* Python>=3.6
-* Redis
+- Python>=3.6
+- Redis
 
 ## Docker 运行
 
@@ -39,19 +39,38 @@ docker-compose up
 运行结果类似如下：
 
 ```
-redis          | 1:C 09 Oct 2020 18:20:13.963 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-redis          | 1:C 09 Oct 2020 18:20:13.963 # Redis version=6.0.8, bits=64, commit=00000000, modified=0, pid=1, just started
-redis          | 1:M 09 Oct 2020 18:20:13.964 * RDB memory usage when created 0.83 Mb
-redis          | 1:M 09 Oct 2020 18:20:13.964 * DB loaded from disk: 0.000 seconds
-redis          | 1:M 09 Oct 2020 18:20:13.964 * Ready to accept connections
-accountpool    | 2020-10-09 18:20:14,089 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-accountpool    | 2020-10-09 18:20:14,091 INFO supervisord started with pid 1
-accountpool    | 2020-10-09 18:20:15,094 INFO spawned: 'generator' with pid 9
-accountpool    | 2020-10-09 18:20:15,096 INFO spawned: 'server' with pid 10
-accountpool    | 2020-10-09 18:20:15,098 INFO spawned: 'tester' with pid 11
-accountpool    | 2020-10-09 18:20:16,280 INFO success: generator entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-accountpool    | 2020-10-09 18:20:16,280 INFO success: server entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-accountpool    | 2020-10-09 18:20:16,280 INFO success: tester entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+redis4accountpool is up-to-date
+Recreating accountpool ... done
+Attaching to redis4accountpool, accountpool
+redis4accountpool    | 1:C 31 Aug 2023 03:53:10.335 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis4accountpool    | 1:C 31 Aug 2023 03:53:10.335 * Redis version=7.2.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis4accountpool    | 1:C 31 Aug 2023 03:53:10.335 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis4accountpool    | 1:M 31 Aug 2023 03:53:10.335 * monotonic clock: POSIX clock_gettime
+redis4accountpool    | 1:M 31 Aug 2023 03:53:10.336 * Running mode=standalone, port=6379.
+redis4accountpool    | 1:M 31 Aug 2023 03:53:10.336 * Server initialized
+redis4accountpool    | 1:M 31 Aug 2023 03:53:10.336 * Ready to accept connections tcp
+redis4accountpool    | 1:C 31 Aug 2023 04:03:11.226 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis4accountpool    | 1:C 31 Aug 2023 04:03:11.226 * Redis version=7.2.0, bits=64, commit=00000000, modified=0, pid=1, just started
+redis4accountpool    | 1:C 31 Aug 2023 04:03:11.226 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis4accountpool    | 1:M 31 Aug 2023 04:03:11.226 * monotonic clock: POSIX clock_gettime
+redis4accountpool    | 1:M 31 Aug 2023 04:03:11.227 * Running mode=standalone, port=6379.
+redis4accountpool    | 1:M 31 Aug 2023 04:03:11.227 * Server initialized
+redis4accountpool    | 1:M 31 Aug 2023 04:03:11.227 * Ready to accept connections tcp
+accountpool          | 2023-08-31 04:06:20,737 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+accountpool          | 2023-08-31 04:06:20,739 INFO supervisord started with pid 1
+accountpool          | 2023-08-31 04:06:21,742 INFO spawned: 'generator' with pid 10
+accountpool          | 2023-08-31 04:06:21,744 INFO spawned: 'server' with pid 11
+accountpool          | 2023-08-31 04:06:21,746 INFO spawned: 'tester' with pid 12
+accountpool          | 2023-08-31 04:06:21.990 | DEBUG    | accountpool.scheduler:run_tester:31 - tester loop 0 start...
+accountpool          | 2023-08-31 04:06:21.990 | DEBUG    | accountpool.scheduler:run_generator:46 - getter loop 0 start...
+accountpool          |  * Running on all addresses.
+accountpool          |    WARNING: This is a development server. Do not use it in a production deployment.
+accountpool          |  * Running on http://172.24.0.3:6777/ (Press CTRL+C to quit)
+accountpool          | 2023-08-31 04:06:22.004 | DEBUG    | accountpool.processors.generator:run:39 - start to run generator
+accountpool          | 2023-08-31 04:06:22.005 | DEBUG    | accountpool.processors.generator:run:43 - start to generate credential of admin1
+accountpool          | 2023-08-31 04:06:23,007 INFO success: generator entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+accountpool          | 2023-08-31 04:06:23,007 INFO success: server entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+accountpool          | 2023-08-31 04:06:23,007 INFO success: tester entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 ```
 
 可以看到 Redis、Generator、Server、Tester 都已经启动成功。
@@ -108,7 +127,7 @@ export REDIS_CONNECTION_STRING='redis://@host:port/db'
 
 ### 安装依赖包
 
-这里强烈推荐使用 [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands) 
+这里强烈推荐使用 [Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands)
 或 [virtualenv](https://virtualenv.pypa.io/en/latest/user_guide.html) 创建虚拟环境，Python 版本不低于 3.6。
 
 然后 pip 安装依赖即可：
@@ -145,37 +164,37 @@ python3 run.py <website> --processor server
 
 ### 开关
 
-* ENABLE_TESTER：允许 Tester 启动，默认 true
-* ENABLE_GENERATOR：允许 Generator 启动，默认 true
-* ENABLE_SERVER：运行 Server 启动，默认 true
+- ENABLE_TESTER：允许 Tester 启动，默认 true
+- ENABLE_GENERATOR：允许 Generator 启动，默认 true
+- ENABLE_SERVER：运行 Server 启动，默认 true
 
 ### 环境
 
-* APP_ENV：运行环境，可以设置 dev、test、prod，即开发、测试、生产环境，默认 dev
-* APP_DEBUG：调试模式，可以设置 true 或 false，默认 true
+- APP_ENV：运行环境，可以设置 dev、test、prod，即开发、测试、生产环境，默认 dev
+- APP_DEBUG：调试模式，可以设置 true 或 false，默认 true
 
 ### Redis 连接
 
-* REDIS_HOST：Redis 的 Host
-* REDIS_PORT：Redis 的端口
-* REDIS_PASSWORD：Redis 的密码
-* REDIS_DB：Redis 的数据库索引，如 0、1
-* REDIS_CONNECTION_STRING：Redis 连接字符串
-* REDIS_KEY：Redis 储存代理使用字典的名称
+- REDIS_HOST：Redis 的 Host
+- REDIS_PORT：Redis 的端口
+- REDIS_PASSWORD：Redis 的密码
+- REDIS_DB：Redis 的数据库索引，如 0、1
+- REDIS_CONNECTION_STRING：Redis 连接字符串
+- REDIS_KEY：Redis 储存代理使用字典的名称
 
 ### 处理器
 
-* CYCLE_TESTER：Tester 运行周期，即间隔多久运行一次测试，默认 20 秒
-* CYCLE_GETTER：Getter 运行周期，即间隔多久运行一次代理获取，默认 100 秒
-* API_HOST：代理 Server 运行 Host，默认 0.0.0.0
-* API_PORT：代理 Server 运行端口，默认 6777
-* API_THREADED：代理 Server 是否使用多线程，默认 true
+- CYCLE_TESTER：Tester 运行周期，即间隔多久运行一次测试，默认 20 秒
+- CYCLE_GETTER：Getter 运行周期，即间隔多久运行一次代理获取，默认 100 秒
+- API_HOST：代理 Server 运行 Host，默认 0.0.0.0
+- API_PORT：代理 Server 运行端口，默认 6777
+- API_THREADED：代理 Server 是否使用多线程，默认 true
 
 ### 日志
 
-* LOG_DIR：日志相对路径
-* LOG_RUNTIME_FILE：运行日志文件名称
-* LOG_ERROR_FILE：错误日志文件名称
+- LOG_DIR：日志相对路径
+- LOG_RUNTIME_FILE：运行日志文件名称
+- LOG_ERROR_FILE：错误日志文件名称
 
 ## 部署
 
